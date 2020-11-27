@@ -4,12 +4,11 @@ Created on Tue Mar 10 13:56:01 2020
 
 @author: jakub.kucera
 """
-from default_var_dict import getBase
+
 import numpy as np
 import math
 import IDP_geometry
 import time
-from IDP_databases import cnt_X, dc_X
 import os
 
 def braidAngle(NS,t,f):
@@ -130,17 +129,6 @@ def poc(MD,varVal,YARN,WW,spoolsWa,spoolsPhy,datum,cdArr,CADfile,rota):
         csl_mat.append(csL)
         i = i + 1
     
-    '''
-    #store perimeter as it is used in other scripts as well
-    if YARN == 0:
-            cnnB,crrB = cnt_X('NCC')
-            query = """UPDATE arun SET root_perimeter = '"""+str(csL)+\
-                    """' WHERE CADfile = '"""+CADfile+"""';"""
-            crrB.execute(query)
-            cnnB.commit()
-            #close SQL handles 
-            dc_X('NCC',cnnB,crrB)
-    '''
             
     #initial position depends on yarn type Weft/warp, one is iterated clockwise one anti clockwise
     if WW == 0:

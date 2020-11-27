@@ -24,32 +24,7 @@ def cat_mesh(span,part, XSeed, SPele):
     CATIA = win32com.client.Dispatch("CATIA.Application")
     CATIA.RefreshDisplay = False
     lPath = os.path.dirname(os.path.abspath(__file__))
-    
-    '''
-    #Location of CATIA file to be meshed.
-    str15 = "CatiaFiles\\SourceFiles\\"+part+".CatPart"
-    partDocument1 = CATIA.Documents.Open(str15)
-    part1 = partDocument1.Part
-    HSF1 = part1.HybridShapeFactory
-    hbs1 = part1.HybridBodies
-    
-    #create geometry set for intersection and hide it
-    hb1 = hbs1.Add()
-    hb1.Name="ints"
-    hb2 = hbs1.Add()
-    hb2.Name="pts"
-    hb3 = hbs1.Item("Surfaces")
-    hs3 = hb3.HybridShapes
-    hsl1 = hs3.Item("MainLoft")
-    
-    #hide
-    selection1 = partDocument1.Selection
-    visPropertySet1 = selection1.VisProperties
-    selection1.Add(hb1)
-    visPropertySet1 = visPropertySet1.Parent
-    visPropertySet1.SetShow(1)
-    selection1.Clear 
-    '''
+
     
     #create MD numpy matrix
     ML = np.zeros([XSeed,4,1])
@@ -60,8 +35,8 @@ def cat_mesh(span,part, XSeed, SPele):
     while i < sf:
         
         #Location of CATIA file to be meshed.
-        str15 = lPath+"\\CatiaFiles\\SourceFiles\\"+part+".CatPart"
-        partDocument1 = CATIA.Documents.Open(str15)
+        #str15 = lPath+"\\CAD\\"+part+".CatPart"
+        partDocument1 = CATIA.Documents.Open(part)
         part1 = partDocument1.Part
         HSF1 = part1.HybridShapeFactory
         hbs1 = part1.HybridBodies

@@ -63,12 +63,7 @@ def baseBraid(varVal,CADfile,MD):
                 tt = pocList[i,8]   
                 tempo = np.matrix([[YARN,x,y,z,xN,yN,zN,bAngle,pitch,pitch,tt,WW]])
                 noSQL = np.concatenate((noSQL,tempo),axis=0)
-                '''
-                query = "INSERT INTO "+GENfile+"(YARN,x,y,z,bAngle,xN,yN,zN,pitch,iteration_time,warpORweft) VALUES("
-                query +=str(YARN)+","+str(x)+","+str(y)+","+str(z)+","+str(bAngle)+","+str(xN)+","+str(yN)+","+str(zN)+","+str(pitch)+","+str(tt)+","+str(WW)+")"
-                #print(query)
-                crrB.execute(query)  
-                '''
+
                 i = i + 1
             #cnnB.commit()
             #dc_X('NCC',cnnB,crrB)
@@ -76,14 +71,7 @@ def baseBraid(varVal,CADfile,MD):
         WW = WW + 1
     
     tt = time.time() - st1
-    '''
-    cnnB,crrB = cnt_X('NCC')  
-    print("Total braiding simulation time:--- %s seconds ---" % (bstt)) 
-    query = "INSERT INTO BraidMain(simulation_time) VALUES("+str(bstt)+")"
-    crrB.execute(query)
-    cnnB.commit()
-    dc_X('NCC',cnnB,crrB)  
-    '''
+
     np.savetxt('braid_data.csv', noSQL, delimiter=',', fmt='%d')
     return(noSQL)
 

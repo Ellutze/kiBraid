@@ -104,7 +104,6 @@ def centreline(MD):
             temp = np.matrix([vx,vy,vz,avz])
             cdArr = np.concatenate((cdArr,temp),axis = 0)
     cdArr = np.delete(cdArr,0,axis=0)
-    np.save("D:\\IDPcode\\temporary\\cdArr.npy", cdArr)
     return(datum,cdArr)
     
 def pitch(a,MD,z,spoolsPhy):
