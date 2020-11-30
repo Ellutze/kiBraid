@@ -1,0 +1,7 @@
+numpy==1.18.1
+pandas==0.25.1
+PyAutoGUI==0.9.48
+PySimpleGUI==4.15.2
+pywin32==228
+sklearn==0.0
+

@@ -30,11 +30,10 @@ def bGUI():
             fll = str(values['tf'])
             print(fll)
             
-            fll = fll.replace('''\\''', '''\\\\''')
+            fll = fll.encode("unicode_escape").decode()
             print(fll)
-            fll = fll.replace("\\\\\\\\","\\\\")
+            fll = fll.replace('/', '\\\\')
             print(fll)
-            
             
             if fll == "":
                 print("please select a file")
@@ -45,7 +44,6 @@ def bGUI():
                 ms = float(values['ms'])
                 gr = float(values['gr'])
                 IMD = float(values['IMD'])
-                print(fll,span,msh,spl,ms)
             
                 varVal = {'span': span,'mesh_size':msh,'spools':spl,'mandrel_speed':ms,'guide_rad':gr,'IMD':IMD}
                 b_master(fll,varVal)

@@ -23,7 +23,8 @@ def b_master(part,varVal):
     lPath = os.path.dirname(os.path.abspath(__file__))
     mesh = varVal["mesh_size"]
     span = varVal["span"]
-    ML = cat_mesh(span,part,60,mesh)
+    spws = int(120/mesh) #the cross-section number of elements 
+    ML = cat_mesh(span,part,spws,mesh)
     
     noSQL = baseBraid(varVal,part,ML)
     
@@ -96,8 +97,9 @@ def b_master(part,varVal):
 
     part1.Update 
       
-    SplineFile = part+"_B_S"   
-    silo = lPath+"\\CAD\\"+SplineFile+"_JK.CatPart"
+  
+    silo = part.replace('testfiles', 'CAD')
+
     partDocument1.SaveAs(silo)
     
     CATIA.RefreshDisplay = True
