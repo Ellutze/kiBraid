@@ -12,7 +12,7 @@ The result should look similar to figure 1. Points for each yarn can be highligh
 
 ![](figures/example.JPG)
 #### Figure 1 – example result 
-The numerical results are available in braid_data.csv in the main folder. The column data in the .csv file are as follows: XXXXX.
+The numerical results are available in braid_data.csv in the main folder. The column data in the .csv file are as follows: Yarn, x,y,z,xN,yN,zN,braid angle,braid pitch, yarn rotation direction. The x,y,z coordinates are the local surface point coordinates. The xN,yN,zN define the normal to the surface at that point.
 
 
 ## CATIA inputs
