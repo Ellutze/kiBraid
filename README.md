@@ -6,7 +6,7 @@ CATIA should be already installed on the system. The library can be cloned into 
 
 ## Test Run
 To run the simulation user should run "braidGui.py". The user should find _test_A005_JK using the browse function, the file is provided within the repository under "testfiles".
-The test-run parameters should be as follows (spools: 8, span: 300, mesh size: 0.8, mandrel speed: 2, guide radius: 500).
+The test-run parameters should be as follows (spools: 8, span: 300, mesh size: 0.8, mandrel speed: 2, initial mandrel distance: 100, guide radius: 500).
 The result should look similar to figure 1. Points for each yarn can be highlighted by selecting geometry set.
 
 
