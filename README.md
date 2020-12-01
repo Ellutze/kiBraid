@@ -23,6 +23,8 @@ The files used as inputs need to follow several standards.
  4.the complete surface needs to be called "MainLoft" and should be located in geometrical set called“Surfaces”.
 ## Other notes
 The details of how the simulation works are provided as annotations.
+
+The option for disabling visualisation in GUI exists for faster runtime. Disabling it will not display any yarns in CATIA, but will still provide .csv result file.
 ## References
 The core formulas for the braiding simulation were taken from:
 Van Ravenhorst JH., 2018. DESIGN TOOLS FOR CIRCULAR OVERBRAIDING OF COMPLEX MANDRELS [Internet]. [cited 2019 Feb 21]. Available from: https://ris.utwente.nl/ws/portalfiles/portal/46645249/PhD_thesis_Johan_van_Ravenhorst.pdf
