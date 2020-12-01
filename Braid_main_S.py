@@ -12,7 +12,13 @@ import time
 import os
 
 def braidAngle(NS,t,f):
-    #Uses vectorised formulas to obtain local braid angle - Johan Van.Ravenhorst thesis reference ....
+    #Uses vectorised formulas to obtain local braid angle 
+    
+    #REF:
+    #Van Ravenhorst JH., 2018. DESIGN TOOLS FOR CIRCULAR OVERBRAIDING OF COMPLEX MANDRELS 
+    #[Internet]. [cited 2019 Feb 21]. Available from: 
+    #https://ris.utwente.nl/ws/portalfiles/portal/46645249/PhD_thesis_Johan_van_Ravenhorst.pdf
+    
     #Turn into unit vectors
     tmag = (t[0]**2 +t[1]**2 +t[2]**2)**(1/2)
     NSmag =(NS[0]**2 +NS[1]**2 +NS[2]**2)**(1/2)
@@ -42,20 +48,19 @@ def braidAngle(NS,t,f):
     return(i,alphad)
 
 def findClosest(MD,count,seg,poc1,forDelete = []):
-    #find closest specified number of points
+    #Find closest specified number of points (count)
     #Done by 3D pythagoras 
     MD1 = np.copy(MD)    
     
-    
+    #arbitrarily high number for initial ref   
     ref = 6666
-    #forDelete = np.matrix([[1,0,0]])
     try:
         magd = forDelete[0]**2+forDelete[1]**2+forDelete[2]**2
     except:
         magd = 0
     
     if magd != 0:
-        #look through MD1 to delete 
+        #look through MD1 to delete
         iii = 0
         while iii < np.size(MD1,0):
             if MD1[iii,1,seg] == forDelete[0] and MD1[iii,2,seg] == forDelete[1] and MD1[iii,3,seg] == forDelete[2]:
@@ -324,8 +329,7 @@ def poc(MD,varVal,YARN,WW,spoolsWa,spoolsPhy,datum,cdArr,CADfile,rota):
                 print("SPP",SPP)
                 print("Houston, we have a problem")
                 print("p1",p1,"p2",p2,"p3",p3,"p4",p4)
-                print(bn)
-                breakhere
+                #breakhere
         #now that tst < 0
         l1_mag = np.sqrt((l1[0])**2+(l1[1])**2+(l1[2])**2)
         l1 = l1/l1_mag

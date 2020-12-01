@@ -7,11 +7,8 @@ Created on Wed Nov  4 13:17:56 2020
 import win32com.client.dynamic
 import numpy as np
 from vecEX2_C import wrmmm
-
 import os
 import math
-from vecEX2_C import wrmmm
-
 
 #takes in a CATIA file and creates MD mesh input for braiding
 # 1.shape needs to start at z=0
@@ -20,13 +17,14 @@ from vecEX2_C import wrmmm
 # 4.the complete surface needs to be called "MainLoft"
 
 def cat_mesh(span,part, XSeed, SPele):
-    #inputs are the span lenght in mm, the name of CATIA file, number of nodes around cross-section, spanwise size of element
+    #Inputs are the span lenght in mm, the name of CATIA file, 
+    #number of nodes around cross-section, spanwise size of element.
     CATIA = win32com.client.Dispatch("CATIA.Application")
     CATIA.RefreshDisplay = False
     lPath = os.path.dirname(os.path.abspath(__file__))
 
-    
-    #create MD numpy matrix
+    #Create MD numpy matrix, 3D matrix, 3D direction corresponds to spanwise 
+    #cross sections.
     ML = np.zeros([XSeed,4,1])
     
     #loop through matrix
@@ -35,7 +33,6 @@ def cat_mesh(span,part, XSeed, SPele):
     while i < sf:
         
         #Location of CATIA file to be meshed.
-        #str15 = lPath+"\\CAD\\"+part+".CatPart"
         partDocument1 = CATIA.Documents.Open(part)
         part1 = partDocument1.Part
         HSF1 = part1.HybridShapeFactory
@@ -58,7 +55,6 @@ def cat_mesh(span,part, XSeed, SPele):
         visPropertySet1.SetShow(1)
         selection1.Clear 
         
-        
         MS = np.zeros([XSeed,4,1])
         #make plane
         z = i*SPele
@@ -67,7 +63,6 @@ def cat_mesh(span,part, XSeed, SPele):
         ref1 = part1.CreateReferenceFromObject(PlaneExplicit1)
         offset1 = HSF1.AddNewPlaneOffset(ref1,z,False)
         hb1.AppendHybridShape(offset1)
-    
             
         #make intersection
         ref1 = part1.CreateReferenceFromObject(offset1)
@@ -91,22 +86,13 @@ def cat_mesh(span,part, XSeed, SPele):
         hb1.AppendHybridShape(hsi2)
         ref78 = part1.CreatereferenceFromObject(hsi2)
         
-        #hsd1 = HSF1.AddNewDirectionByCoord(1,2,3)
-        #hse1 = HSF1.AddNewExtremum(ref3,hsd1,1)
-        #hb1.AppendHybridShape(hse1)
-        #ref4 = part1.CreateReferenceFromObject(hse1)
+
         
         ii = 0
         #loop through interssection
         while ii < XSeed:
             
-            #make a point
-            #hsd1 = HSF1.AddNewDirectionByCoord(1,2,3)
-            #hse1 = HSF1.AddNewExtremum(ref3,hsd1,1)
-            #hb1.AppendHybridShape(hse1)
-            #ref4 = part1.CreateReferenceFromObject(hse1)
-            
-            
+            #create a node on the cross section 
             poc1 = HSF1.AddNewPointOnCurveWithReferenceFromPercent(ref3,ref78,(ii/XSeed),False)
             hb2.AppendHybridShape(poc1)
             poc1.Name="MeshPoint"+str(ii+i*XSeed)
@@ -136,15 +122,12 @@ def cat_mesh(span,part, XSeed, SPele):
         #store 3D coordinates in MD 
         print(MS)
         ML = np.concatenate((ML,MS),axis = 2)  
-        
         partDocument1.Close()
 
         i = i + 1
     #save mesh
     ML = np.delete(ML,0,axis=2)
-    np.save('Temporary\\ex_mesh.npy', ML)
-    #np.savetxt("Temporary\\test1.csv", ML, delimiter=",")
-            
+    np.save('Temporary\\ex_mesh.npy', ML)            
     return(ML)
     
 #ML = cat_mesh(1500,"IDP_oscar_1904_A001_JK",20,20)

@@ -3,9 +3,7 @@ import os
     
 def wrmmm():
     #Supports collection of geometry information (vecotr/point coordinates) from Catia
-    #creates temporary file to export vector and point:
-    #C:\Users\jk17757\Local Documents\python\TheProject\CatiaFiles\wrmmm
-    #IDP_scriptsource_1902_A001_JK.wrl
+    #open temporary file used to export vector and point:
     lPath = os.path.dirname(os.path.abspath(__file__))
     fl = open(lPath+"\\Temporary\\xxx.wrl", "rt")
     flstr1 = fl.read() 
@@ -40,12 +38,9 @@ def wrmmm():
         f_point[0,1] = float(p1.split(" ")[2])
         f_point[0,2] = float(p1.split(" ")[3])
     
-    #closes the .wrl file
+    #closes and remove the .wrl file
     fl.close()
-    #~~~~~the remove should have "finally" clause, needs to always remove the file or next sim will fail~~~~
-    #breakhere
     os.remove(lPath+"\\Temporary\\xxx.wrl")
-    #print(f_point,"f_point")
     return(vec, f_point)
     
     

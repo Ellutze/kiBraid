@@ -6,11 +6,7 @@ Created on Wed Mar 11 13:22:34 2020
 """
 
 import numpy as np
-#from IDP_databases import cnt_X, dc_X
-#from mysql.connector import MySQLConnection, Error
-#from python_mysql_dbconfig import read_db_config
 from Braid_main_S import poc
-#from default_var_dict import getBase
 import time
 import IDP_geometry
 import os
@@ -22,33 +18,25 @@ def is_empty(any_structure):
         return True
 
 def baseBraid(varVal,CADfile,MD):
-    lPath = os.path.dirname(os.path.abspath(__file__))
-    st1 = time.time() 
-
-    #MD = np.load(lPath+"\\catiafiles\\meshfiles\\"+MeshFile+"_nodes.npy")
+    #This function iterates through all yarns simulated
     
-    MS = varVal["mandrel_speed"]
     spoolsPhy = varVal['spools']
     rotax = 0.15 #travel per second (rad/s)
-    #0.11 for braid comparison oscar
-    
-    #ammending the number of iterations required based on expected braid angles
-    ratio2 = MS/rotax
-    #spoolsWa =  max(8,int(0.8*ratio2))
     spoolsWa = varVal['spools'] #temporary troubleshooting
     print(spoolsWa)
        
     #find points on mandrel centreline
     datum, cdArr = IDP_geometry.centreline(MD)
     WW = 0
-    noSQL = np.zeros([1,12])
+    noSQL = np.zeros([1,10])
+    #for each spool travel direction
     while WW < 2:
         YARN = 0
         #for each yarn
         while YARN < spoolsWa:
             #following function simulates positioning of a specific yarn on mandrel surface
             pocList = poc(MD,varVal,YARN,WW,spoolsWa,spoolsPhy,datum,cdArr,CADfile,rotax)
-            #cnnB,crrB = cnt_X('NCC')  
+ 
             i = 0
             while i < np.size(pocList,0):
                 #pocList decomposed for clarity of the script
@@ -60,18 +48,15 @@ def baseBraid(varVal,CADfile,MD):
                 zN = pocList[i,6]               
                 bAngle = pocList[i,7]
                 pitch =  pocList[i,9]
-                tt = pocList[i,8]   
-                tempo = np.matrix([[YARN,x,y,z,xN,yN,zN,bAngle,pitch,pitch,tt,WW]])
+                #tt = pocList[i,8]   
+                tempo = np.matrix([[YARN,x,y,z,xN,yN,zN,bAngle,pitch,WW]])
                 noSQL = np.concatenate((noSQL,tempo),axis=0)
 
                 i = i + 1
-            #cnnB.commit()
-            #dc_X('NCC',cnnB,crrB)
+
             YARN = YARN + 1
         WW = WW + 1
-    
-    tt = time.time() - st1
-
+    #store data in CSV
     np.savetxt('braid_data.csv', noSQL, delimiter=',', fmt='%d')
     return(noSQL)
 
