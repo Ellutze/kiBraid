@@ -1,5 +1,7 @@
 # kiBraid
-kinematic braiding simulation using CATIA file as input and for visualization
+Kinematic braiding simulation using CATIA file as input and for visualization.
+
+Provides local braid angles and yarn pitch information for selected number of representative yarns around the mandrel.
 
 ## Installation
 CATIA should be already installed on the system. The library can be cloned into any folder. Installing python libraries through requirements.txt should be possible “pip install -r requirements.txt”.
